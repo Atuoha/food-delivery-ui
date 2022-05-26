@@ -1,15 +1,35 @@
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../components/list.dart';
+import '../provider/food.dart';
 
 class NoddlesScreen extends StatelessWidget {
   const NoddlesScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text('NODDLES-SCREEN'),
-    );
+    List food = Provider.of<FoodData>(context, listen: false).noddlesMeals;
+
+    return food.isEmpty
+        ? Center(
+            child: Column(
+              children: const [
+                CircleAvatar(
+                  radius:120,
+                  backgroundImage: AssetImage(
+                    'assets/images/sad.jpg',
+                  ),
+                ),
+                SizedBox(height:10),
+                Text(
+                  'Meal Category is Empty!',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                )
+              ],
+            ),
+          )
+        : GridViewComponent(meal: food);
   }
 }

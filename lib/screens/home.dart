@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-
+// import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:dots_indicator/dots_indicator.dart';
 import '../category_meals/noddles.dart';
 import '../category_meals/pizza.dart';
 import '../category_meals/popular.dart';
@@ -16,43 +16,39 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  int index = 0;
+  static final pages = [
+    const RecommendedScreen(),
+    const PopularScreen(),
+    const NoddlesScreen(),
+    const PizzaScreen(),
+  ];
 
-    static int index = 0;
-      final controller = PageController(
-        initialPage: _HomePageState.index,
-        viewportFraction: 0.8, keepPage: true);
-    final pages = [
-      const RecommendedScreen(),
-      const PopularScreen(),
-      const NoddlesScreen(),
-      const PizzaScreen(),
-    ];
+  void switchPage(int pageIndex) {
+    setState(() {
+      index = pageIndex;
+    });
+  }
 
-    void switchPage(int pageIndex) {
-      setState(() {
-        index = pageIndex;
-        print(index);
-      });
-    }
+  final controller = PageController(viewportFraction: 0.8, keepPage: true);
 
-    Widget categoryButton(int catIndex, String title) {
-      return GestureDetector(
-        onTap: () => switchPage(catIndex),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Chip(
-            backgroundColor: index == catIndex ? yellowDeep : Colors.white,
-            label: Text(
-              title,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
+  Widget categoryButton(int catIndex, String title) {
+    return GestureDetector(
+      onTap: () => switchPage(catIndex),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Chip(
+          backgroundColor: index == catIndex ? yellowDeep : Colors.white,
+          label: Text(
+            title,
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
             ),
           ),
         ),
-      );
-    }
-
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -216,26 +212,19 @@ class _HomePageState extends State<HomePage> {
               ),
               SingleChildScrollView(
                 child: Container(
-                  height: 435,
-                  width: double.infinity,
-                  child: pages[index],
+                  height: 430,
+                  // width: 500,
+                  child:pages[index],
+                  
                 ),
               ),
-              SmoothPageIndicator(
-                controller: controller,
-                count: pages.length,
-                effect: const ScrollingDotsEffect(
-                  dotColor: greyAccent,
-                  activeDotColor: yellowDeep,
-                  activeStrokeWidth: 2.6,
-                  activeDotScale: 1.9,
-                  maxVisibleDots: 5,
-                  radius: 8,
-                  spacing: 10,
-                  dotHeight: 7,
-                  dotWidth: 7,
-                  paintStyle: PaintingStyle.stroke,
+              DotsIndicator(
+                decorator: const DotsDecorator(
+                  activeColor: yellowDeep,
+                  color: greyAccent,
                 ),
+                dotsCount: pages.length,
+                position: index + 0,
               )
             ],
           ),
