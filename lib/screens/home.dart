@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 // import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:dots_indicator/dots_indicator.dart';
+import 'package:food_delivery_ui/components/floating_button.dart';
 import '../category_meals/noddles.dart';
 import '../category_meals/pizza.dart';
 import '../category_meals/popular.dart';
@@ -53,29 +54,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FittedBox(
-        child: FloatingActionButton.extended(
-          extendedPadding: const EdgeInsets.all(8),
-          backgroundColor: yellowDeep,
-          onPressed: () {},
-          icon: const Icon(
-            Icons.shopping_bag_outlined,
-            color: Colors.black,
-          ),
-          label: const CircleAvatar(
-            radius: 18,
-            backgroundColor: Colors.white,
-            child: Text(
-              '1',
-              style: TextStyle(
-                fontSize: 18,
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-        ),
-      ),
+      floatingActionButton: const FloatingButton(),
       backgroundColor: themeColor,
       appBar: AppBar(
         elevation: 0,

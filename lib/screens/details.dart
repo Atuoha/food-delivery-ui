@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
+import '../components/floating_button.dart';
 import '../constants/color.dart';
 import '../model/food.dart';
 import '../provider/food.dart';
@@ -16,6 +17,19 @@ class DetailsPage extends StatefulWidget {
 enum Operation { increment, decrement }
 
 class DetailsPageState extends State<DetailsPage> {
+  Widget titleText(String title) {
+    return Container(
+      margin: const EdgeInsets.only(top: 20, bottom: 20),
+      child: Text(
+        title,
+        style: const TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 18,
+        ),
+      ),
+    );
+  }
+
   Widget customTiles(var title, Color color, IconData icon) {
     return Wrap(
       crossAxisAlignment: WrapCrossAlignment.center,
@@ -69,6 +83,7 @@ class DetailsPageState extends State<DetailsPage> {
     Food food = Provider.of<FoodData>(context).findById(id);
 
     return Scaffold(
+      floatingActionButton: const FloatingButton(),
       extendBodyBehindAppBar: true,
       backgroundColor: yellowDeep,
       appBar: AppBar(
@@ -105,7 +120,7 @@ class DetailsPageState extends State<DetailsPage> {
               radius: 19,
               backgroundColor: themeColor,
               child: Icon(
-                Icons.favorite_border,
+                Icons.favorite,
                 color: Colors.black,
               ),
             ),
@@ -132,154 +147,155 @@ class DetailsPageState extends State<DetailsPage> {
                   ),
                   child: Container(
                     margin: const EdgeInsets.only(top: 90),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Center(
-                          child: Text(
-                            food.name,
-                            style: const TextStyle(
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold,
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Center(
+                            child: Text(
+                              food.name,
+                              style: const TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
-                        ),
-                        const SizedBox(height: 10),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            customTiles(
-                              food.waitTime,
-                              Colors.blue,
-                              Icons.alarm,
-                            ),
-                            const SizedBox(width: 15),
-                            customTiles(
-                              food.score,
-                              yellowDeep,
-                              Icons.star_outline,
-                            ),
-                            const SizedBox(width: 15),
-                            customTiles(
-                              food.cal,
-                              Colors.red,
-                              CupertinoIcons.drop,
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 20),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            RichText(
-                              text: TextSpan(
-                                style: const TextStyle(
-                                  color: Colors.black,
-                                ),
-                                children: [
-                                  WidgetSpan(
-                                    child: Transform.translate(
-                                      offset: const Offset(0.0, -9.0),
-                                      child: const Text(
-                                        '\$',
-                                        style: TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black,
+                          const SizedBox(height: 10),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              customTiles(
+                                food.waitTime,
+                                Colors.blue,
+                                Icons.alarm,
+                              ),
+                              const SizedBox(width: 15),
+                              customTiles(
+                                food.score,
+                                yellowDeep,
+                                Icons.star_outline,
+                              ),
+                              const SizedBox(width: 15),
+                              customTiles(
+                                food.cal,
+                                Colors.red,
+                                CupertinoIcons.drop,
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 20),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              RichText(
+                                text: TextSpan(
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                  ),
+                                  children: [
+                                    WidgetSpan(
+                                      child: Transform.translate(
+                                        offset: const Offset(0.0, -9.0),
+                                        child: const Text(
+                                          '\$',
+                                          style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                  TextSpan(
-                                    text: '${food.price}',
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 23,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(width: 10),
-                            Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(30),
-                                color: yellowDeep,
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 8.0, vertical: 5),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    operationButton(
-                                      Icons.add,
-                                      Operation.increment,
-                                    ),
-                                    CircleAvatar(
-                                      backgroundColor: themeColor,
-                                      radius: 12,
-                                      child: Text(
-                                        '$quantity',
-                                        style: const TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                    ),
-                                    operationButton(
-                                      Icons.remove,
-                                      Operation.decrement,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                        const Text(
-                          'Ingredients',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                          ),
-                        ),
-                        Container(
-                          height: 100,
-                          padding: EdgeInsets.all(5),
-                          child: GridView.count(
-                            crossAxisSpacing: 5,
-                            padding: EdgeInsets.zero,
-                            crossAxisCount: food.ingredients.length,
-                            children: food.ingredients.map((ingredient) {
-                              return Container(
-                                height: 120,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(50),
-                                  color: Colors.white,
-                                ),
-                                child: Column(
-                                  children: [
-                                    CircleAvatar(
-                                      backgroundColor: Colors.white,
-                                      backgroundImage: AssetImage(
-                                        ingredient.values.first,
-                                      ),
-                                    ),
-                                    Text(
-                                      ingredient.keys.first,
+                                    TextSpan(
+                                      text: '${food.price}',
                                       style: const TextStyle(
-                                        fontWeight: FontWeight.w400,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 23,
                                       ),
-                                    )
+                                    ),
                                   ],
                                 ),
-                              );
-                            }).toList(),
+                              ),
+                              const SizedBox(width: 10),
+                              Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(30),
+                                  color: yellowDeep,
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 8.0, vertical: 5),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      operationButton(
+                                        Icons.add,
+                                        Operation.increment,
+                                      ),
+                                      CircleAvatar(
+                                        backgroundColor: themeColor,
+                                        radius: 12,
+                                        child: Text(
+                                          '$quantity',
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      ),
+                                      operationButton(
+                                        Icons.remove,
+                                        Operation.decrement,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              )
+                            ],
                           ),
-                        )
-                      ],
+                          titleText('Description'),
+                          Text(food.desc,textAlign: TextAlign.justify,),
+                          titleText('Ingredients'),
+                          Container(
+                            height: 100,
+                            padding: const EdgeInsets.all(5),
+                            child: GridView.count(
+                              crossAxisSpacing: 5,
+                              padding: EdgeInsets.zero,
+                              crossAxisCount: food.ingredients.length,
+                              children: food.ingredients.map((ingredient) {
+                                return Container(
+                                  height: 120,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(50),
+                                    color: Colors.white,
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      CircleAvatar(
+                                        backgroundColor: Colors.white,
+                                        backgroundImage: AssetImage(
+                                          ingredient.values.first,
+                                        ),
+                                      ),
+                                      Text(
+                                        ingredient.keys.first,
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                          
+                          titleText('About'),
+                          Text(food.about,textAlign: TextAlign.justify,)
+                        ],
+                      ),
                     ),
                   ),
                 ),

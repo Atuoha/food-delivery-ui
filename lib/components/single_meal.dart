@@ -87,7 +87,7 @@ class MealComponent extends StatelessWidget {
             child: Container(
               padding: EdgeInsets.zero,
               // transform:
-              alignment: const Alignment(1.5, -1.5),
+              alignment: const Alignment(1, -1),
               child: const Icon(
                 Icons.chevron_right,
                 color: Colors.black,
