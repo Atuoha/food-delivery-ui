@@ -15,7 +15,7 @@ class RecommendedScreen extends StatelessWidget {
             child: Column(
               children: const [
                 CircleAvatar(
-                  radius:120,
+                  radius:100,
                   backgroundImage: AssetImage(
                     'assets/images/sad.jpg',
                   ),

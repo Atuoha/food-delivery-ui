@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'provider/food.dart';
 import 'screens/home.dart';
+import 'screens/details.dart';
 
 void main() => runApp(const MyApp());
 
@@ -10,13 +11,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  ChangeNotifierProvider(
-      create: (context)=>FoodData(),
+    return ChangeNotifierProvider(
+      create: (context) => FoodData(),
       child: MaterialApp(
-        debugShowCheckedModeBanner:false,
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(fontFamily: 'JosefinSlab'),
         home: const HomePage(),
-        routes: {},
+        routes: {
+          DetailsPage.routeName: (context) => DetailsPage(),
+        },
       ),
     );
   }

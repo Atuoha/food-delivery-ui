@@ -1,14 +1,15 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import '../constants/color.dart';
+import '../screens/details.dart';
 
 class MealComponent extends StatelessWidget {
   final String image;
+  final int id;
   final String name;
   final double price;
   final String keyFactor;
   MealComponent({
+    required this.id,
     required this.image,
     required this.name,
     required this.price,
@@ -28,6 +29,7 @@ class MealComponent extends StatelessWidget {
       child: Row(
         children: [
           CircleAvatar(
+            backgroundColor: Colors.white,
             radius: 45,
             backgroundImage: AssetImage(image),
           ),
@@ -83,15 +85,12 @@ class MealComponent extends StatelessWidget {
           // const SizedBox(width:50),
           Expanded(
             child: Container(
-              padding:EdgeInsets.zero,
+              padding: EdgeInsets.zero,
               // transform:
-              alignment: Alignment(1.5, -1.5),
-              child: const IconButton(
-                onPressed: null,
-                icon: Icon(
-                  Icons.chevron_right,
-                  color:Colors.black
-                ),
+              alignment: const Alignment(1.5, -1.5),
+              child: const Icon(
+                Icons.chevron_right,
+                color: Colors.black,
               ),
             ),
           )
